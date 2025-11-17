@@ -1,7 +1,7 @@
 export default function useThrottle(event, delay = 1000) {
   let lastCall = 0;
 
-  const throttledFn = function (...args) {
+  return function (...args) {
     const now = Date.now();
     if (now - lastCall > delay) {
       event(...args);
@@ -9,5 +9,4 @@ export default function useThrottle(event, delay = 1000) {
     }
   };
 
-  return throttledFn;
 }
