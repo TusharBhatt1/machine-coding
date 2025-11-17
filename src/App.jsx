@@ -8,6 +8,7 @@ import InfiniteScroll from './code/infinite-scroll.jsx'
 import Debouncethrottle from './code/debounce+throttle.jsx'
 import Check from './code/hoc.jsx'
 import InfiniteScroll2 from './code/infinite-scroll2.jsx'
+import Razorpay from './code/razorpay/Razorpay.jsx'
 export default function App() {
   return (
     <div className='space-y-12 p-2 flex flex-wrap gap-4'>
@@ -19,6 +20,7 @@ export default function App() {
       <Debouncethrottle/>
       <Check/>
       <InfiniteScroll2/>
+      <Razorpay/>
     </div>
   )
 }
