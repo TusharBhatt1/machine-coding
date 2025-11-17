@@ -10,8 +10,8 @@ export default function Razorpay() {
   return (
     <div>
       Razorpay
-      <Activity mode={show ? "visible" :"hidden"}>
-        <Count/>
+      <Activity mode={show ? "visible" : "hidden"}>
+        <Count />
       </Activity>
       {/* {show && <Count />} */}
       <button onClick={() => setShow(!show)}>SHOW</button>
