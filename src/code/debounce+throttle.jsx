@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
+import { fetchWithRetries, getData } from "./hooks/api-retries";
 
 export default function Debouncethrottle() {
 
@@ -29,6 +30,20 @@ export default function Debouncethrottle() {
   };
 
   const handleThrottleClick = useMemo(()=>throttle(handleClick),[])
+
+  useEffect(()=>{
+    async function fetchData(){
+      try {
+       const res= await fetchWithRetries(getData)
+       console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+   fetchData()
+
+  },[])
+
 
   return (
     <div>
