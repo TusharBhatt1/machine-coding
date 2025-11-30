@@ -1,35 +1,31 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function DigitalClock() {
-  const [hours, setHours] = useState("00");
-  const [minutes, setMinutes] = useState("00");
-  const [seconds, setSeconds] = useState("00");
 
-  useEffect(()=>{
+export default function DigitalClock() {
+  const [hours, setHours] = useState("0");
+  const [minutes, setMinutes] = useState("0");
+  const [seconds, setSeconds] = useState("0");
 
-    function setTime(){
-    const date = new Date()
-    setHours(date.getHours())
-    setMinutes(date.getMinutes())
-    setSeconds(date.getSeconds())
+  useEffect(() => {
+    function setTime() {
+      const date = new Date();
+
+      setMinutes(date.getMinutes() < 9 ? "0"+date.getMinutes():date.getMinutes());
+      setHours(date.getHours() < 9 ? "0"+date.getHours():date.getHours());
+      setSeconds(date.getSeconds() < 9 ? "0"+date.getSeconds():date.getSeconds());
     }
+    setTime();
 
-    setTime()
+    const timer = setInterval(() => setTime(), 1000);
 
-   const interval= setInterval(() => {
-        setTime()
-    }, 1000);
-
-    return ()=> clearInterval(interval)
-
-  },[])
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <p>
-      {hours + ":"}{minutes+":"} 
+    <div>
+      {hours + ":"}
+      {minutes + ":"}
       {seconds}
-    </p>
+    </div>
   );
 }
-
-export default DigitalClock;
