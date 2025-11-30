@@ -1,31 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export default function Dropdown() {
-  const dropDownRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const handleMouseDown = (event) => {
-      if (
-        dropDownRef.current &&
-        !dropDownRef.current.contains(event.target)
-      ) {
-        setIsOpen(false);
+    const handleClick = (e) => {
+      if (!dropdownRef.current.contains(e.target)) {
+        setOpen(false)
       }
     };
-
-    document.addEventListener("mousedown", handleMouseDown);
-    return () => document.removeEventListener("mousedown", handleMouseDown);
+    document.addEventListener("click", handleClick);
   }, []);
   return (
-    <div className="relative inline-block" ref={dropDownRef}>
-      <input onClick={() => setIsOpen(true)} className="border-black border" />
-      {isOpen && (
-        <div className="bg-slate-200">
-          <p>Option1 </p>
-          <p>Option2 </p>
-          <p>Option3 </p>
-        </div>
+    <div className="relative inline-block" ref={dropdownRef}>
+      <button onClick={() => setOpen(!open)}>{open ? "CLOSE" : "OPEN"}</button>
+      {open && (
+        <ul className="bg-red-100">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
       )}
     </div>
   );
