@@ -1,66 +1,46 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-async function getData(totalFetched, itemToFetch = 10) {
-  const data = Array.from({ length: 50 }, (_, i) => `Item-${i + 1}`);
-
-  const currentData = data.slice(totalFetched || 0, totalFetched + itemToFetch);
-
-  const result ={
-    data: currentData,
-    total: data.length,
-    totalFetched: totalFetched === 1 ? itemToFetch : totalFetched,
-    hasMore: !(totalFetched >= data.length),
+async function getData(totalFetched, itemPerCall = 10) {
+  await new Promise((res) => setTimeout(() => res(), 2000));
+  const totalItems = Array.from({ length: 50 }, (_, i) => `Item-${i + 1}`);
+  const returningItems = totalItems.slice(
+    totalFetched,
+    totalFetched + itemPerCall
+  );
+  return {
+    data: returningItems,
+    hasMore: totalFetched + 5 < totalItems.length,
   };
-  return new Promise((res)=>{
-    setTimeout(()=>res({result}),2000)
-  })
-
-
 }
 export default function InfiniteScroll() {
-  const [items, setItems] = useState([]);
-  const [fetchMore, setFetchMore] = useState(0);
+  const [data, setData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const triggerRef = useRef(null);
-  const containerRef = useRef(null);
-
-  const fetchData= useCallback(()=>async function () {
-    const res = await getData(items.length);
-    console.log(res.result.data);
-    setHasMore(res.result.hasMore);
-    setItems((p) => [...p, ...res.result.data]);
-  },[items])
+  const triggeRef = useRef();
 
   useEffect(() => {
-    if (hasMore) fetchData();
-  }, [fetchData, fetchMore, hasMore]);
-
-  useEffect(() => {
-    if (!hasMore) return;
-    const triggerEl = triggerRef.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          console.log("trigger...");
-          setFetchMore((p) => p + 1);
-        }
-      },
-      {
-        threshold: 1,
+    const observer = new IntersectionObserver(async (entries) => {
+      if (entries[0].isIntersecting && hasMore) {
+        const items = await getData(data.length);
+        setData((p) => [...p, ...items.data]);
+        setHasMore(items.hasMore);
       }
-    );
-    if (triggerEl) observer.observe(triggerEl);
-    return () => observer.disconnect(triggerEl);
-  }, [hasMore]);
+    });
+    observer.observe(triggeRef.current);
+
+    return () => observer.disconnect();
+  }, [data.length,hasMore]);
 
   return (
-    <div className="border size-72 overflow-scroll" ref={containerRef}>
-      {items.map((i, ind) => (
-        <p key={ind} className="bg-amber-300 p-1">
-          {i}
+    <div>
+      <h2>Infinite Scroll</h2>
+      <main className="h-40 bg-amber-100 overflow-auto">
+        {data.map((d) => (
+          <p>{d}</p>
+        ))}
+        <p ref={triggeRef}>
+          {hasMore ? "Loading..." : "No more data to fetch"}
         </p>
-      ))}
-      <p ref={triggerRef}>{hasMore ? "Fetching..." : "no more"}</p>
+      </main>
     </div>
   );
 }

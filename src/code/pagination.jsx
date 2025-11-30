@@ -1,39 +1,52 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 
-async function getData(pageNumber=1,pageCount=5){
-  const data= Array.from({length:50},(_,i)=>`Item-${i+1}`)
-  const currentData= data.slice((pageNumber-1)*pageCount,pageNumber*pageCount)
+async function getData(currentPage = 1, pageSize = 5) {
+  await new Promise((res) => setTimeout(() => res(), 2000));
+  const totalItems = Array.from({ length: 50 }, (_, i) => `Item-${i + 1}`);
+
+  const startI = (currentPage - 1) * 5;
+  const returningData = totalItems.slice(startI, startI + pageSize);
+
   return {
-    data:currentData,
-    pageNumber,
-    total:data.length,
-    pageCount
-  }
+    items: returningData,
+    totalCount: totalItems.length,
+  };
 }
 
 export default function Pagination() {
-const [pageN,setPageN]=useState(1)
-const [totalPages,setTotalPages]=useState(0)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
+  const [data, setData] = useState({});
 
-const [items,setItems]=useState([])
-
-  useEffect(()=>{
-    async function fetchData(){
-      const res = await getData(pageN)
-      setItems(res.data)
-      setTotalPages(res.total/5)
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getData(currentPage);
+      setTotalPages(data.totalCount / 5);
+      setData((prev) => ({ ...prev, [currentPage]: data.items }));
     }
-    fetchData()
-  },[pageN])
+    if (!data[currentPage]) fetchData();
+  }, [currentPage,data]);
 
   return (
-  <div className="inline-block space-y-2">
-    {items.map((i)=><p key={i} className="bg-amber-300 p-1">{i}</p>)}
-    <div className="space-x-2">
-    {Array.from({length:totalPages},(_,i)=>(
-      <button key={`button-${i}`} className="border p-1" onClick={()=>setPageN(i+1)}>{i+1}</button>
-    ))}
+    <div>
+      <h2>Pagination</h2>
+      <div>
+        <div className="min-h-36">
+          {data[currentPage] ? (
+            data[currentPage]?.map((d) => <p>{d}</p>)
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            style={{ background: currentPage === i + 1 && "lightGreen" }}
+            onClick={() => setCurrentPage(i + 1)}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
-  )
+  );
 }
