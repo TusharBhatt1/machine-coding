@@ -28,6 +28,37 @@ const useLocalStorage = (key, initialValue) => {
     setValue,
   };
 };
+
+
+// function useDebounce(value, delay = 0) {
+//   const timer = useRef(null);
+//   const [debouncedValue, setDebouncedValue] = useState(value);
+
+//   useEffect(() => {
+//     if (timer.current) clearTimeout(timer.current);
+//     timer.current = setTimeout(() => setDebouncedValue(value), delay);
+
+//     return ()=>clearTimeout(timer.current)
+//   }, [value, delay]);
+
+//   return debouncedValue;
+// }
+
+// function useThrottle(value, delay) {
+//   const lastCall = useRef(0);
+//   const [throttledValue, setThrottledValue] = useState(value);
+
+//   useEffect(() => {
+//     const now = Date.now();
+//     if (now - lastCall > delay) {
+//       setThrottledValue(value);
+//       lastCall=now
+//     }
+//   }, [value, delay]);
+
+//   return throttledValue
+// }
+
 export default function ArcesiumPractise() {
   const useDebounce = (cb, delay = 300) => {
     const timerRef = useRef(null);
