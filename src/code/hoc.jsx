@@ -1,10 +1,10 @@
 import React from 'react';
 
 function HOC(WrappedComponent) {
-  return function Enhanced(props) {
-    if (props.isLoading) return <p>Loading...</p>;
-    return <WrappedComponent {...props} />;
-  };
+  return function (props){
+    if(props.isLoading) return <p>Loading...</p>
+    return <WrappedComponent {...props}/>
+  }
 }
 
 function Child() {
