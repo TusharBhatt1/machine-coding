@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 // GROWW
 function example1() {
     console.log("start");
@@ -59,7 +61,27 @@ function example1() {
       
   }
 
+  // Tell how many times the something will be logged on console
+
+const Comp = () => {
+  let state = {};
+
+  useEffect(() => {
+    console.log('useEffect');
+  }, [state]);
+
+  state = {
+    er: 'se',
+  };
+
+  return <>{JSON.stringify(state)}</>;
+
+  // 'state' is not a React state, it's a local variable and React won't track it
+  // reassigning variable != updating react state
+};
+
   example1();
   example2();
   example3();
   example4()
+  Comp()
