@@ -49,7 +49,17 @@ function example1() {
     console.log(typeof b);
   }
 
+  function example4(){
+    const x = {
+      Re: "some"
+      }
+      const y= 34;
+      const z = x.re > y; //undefind > 34 -> 0 > 34
+      console.log(typeof typeof typeof z)
+      
+  }
+
   example1();
   example2();
   example3();
-  
+  example4()
