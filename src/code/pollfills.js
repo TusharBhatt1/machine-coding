@@ -61,3 +61,21 @@ Promise.myAll=function(promises){
 }
 
 Promise.myAll([Promise.resolve(2)]).then((r)=>console.log(r))
+
+
+// Promise.all
+// → Resolves when ALL promises resolve
+// → Rejects immediately if ANY promise rejects (fail-fast)
+
+// Promise.allSettled
+// → Waits for ALL promises to settle (fulfilled or rejected)
+// → Returns an array of result objects { status, value | reason }
+
+// Promise.any
+// → Resolves with the FIRST fulfilled promise
+// → Ignores rejections unless ALL promises reject
+// → Rejects with AggregateError if all fail
+
+// Promise.race
+// → Settles with the FIRST promise to settle
+// → Can resolve OR reject (whichever happens first)
