@@ -79,3 +79,64 @@ Promise.myAll([Promise.resolve(2)]).then((r)=>console.log(r))
 // Promise.race
 // → Settles with the FIRST promise to settle
 // → Can resolve OR reject (whichever happens first)
+
+// ------
+
+//call back hell vs promise
+
+// const getFirstData=function(cb){
+//     setTimeout(()=>
+//     cb("firstdata")
+//     ,1000)
+// }
+// const getSecondData=function(cb){
+//      setTimeout(()=>
+//     cb("seconddata")
+//     ,2000)
+// }
+// const getThirdData=function(cb){
+//      setTimeout(()=>
+//     cb("thirddata")
+//     ,3000)
+// }
+// getFirstData((d1)=>{
+//     getSecondData((d2)=>{
+//          getThirdData((d3)=>{
+//         console.log(d1+d2+d3)
+//     })
+//     })
+// })
+
+
+// const getfirstp= new Promise((res,rej)=>
+//  setTimeout(()=>
+//     res("d1")
+//     ,2000)
+// ))
+// const getsecondp= new Promise((res,rej)=>
+//  setTimeout(()=>
+//     res("d2")
+//     ,2000)
+// ))
+// const getsecondp= new Promise((res,rej)=>
+//  setTimeout(()=>
+//     res("d3")
+//     ,2000)
+// ))
+
+// const p1 = await getfirstp
+// const p2= await getsecondp
+// const p3 = await getthirdp
+
+// console.log(p1+p2+p3)
+
+
+
+
+
+
+
+
+
+
+
