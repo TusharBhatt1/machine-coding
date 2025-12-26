@@ -84,6 +84,7 @@ Promise.myAll([Promise.resolve(2)]).then((r)=>console.log(r))
 
 //call back hell vs promise
 
+// console.log("started")
 // const getFirstData=function(cb){
 //     setTimeout(()=>
 //     cb("firstdata")
@@ -105,30 +106,30 @@ Promise.myAll([Promise.resolve(2)]).then((r)=>console.log(r))
 //         console.log(d1+d2+d3)
 //     })
 //     })
-// })
+// })  ---> 6 seconds in total
 
 
 // const getfirstp= new Promise((res,rej)=>
 //  setTimeout(()=>
 //     res("d1")
-//     ,2000)
-// ))
+//     ,1000)
+// )
 // const getsecondp= new Promise((res,rej)=>
 //  setTimeout(()=>
 //     res("d2")
 //     ,2000)
-// ))
-// const getsecondp= new Promise((res,rej)=>
+// )
+// const getthirdp= new Promise((res,rej)=>
 //  setTimeout(()=>
 //     res("d3")
-//     ,2000)
-// ))
+//     ,3000)
+// )
 
 // const p1 = await getfirstp
 // const p2= await getsecondp
 // const p3 = await getthirdp
 
-// console.log(p1+p2+p3)
+// console.log(p1+p2+p3) --> ~3 seconds
 
 
 
