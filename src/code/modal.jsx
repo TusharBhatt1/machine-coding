@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
+// portal renders the children into some other location (removing the overhead of z-index, overflow-hidden etc)
+
 export default function Modal() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleKeyboardpress =(e) => {
-        if (e.key === "Escape") setOpen(false);
-      }
-    document.addEventListener("keydown",handleKeyboardpress );
+    const handleKeyboardpress = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyboardpress);
     return () => document.removeEventListener("keydown", handleKeyboardpress);
   }, []);
-  
+
   return (
     <>
       <button onClick={() => setOpen(true)}>Open modal</button>
