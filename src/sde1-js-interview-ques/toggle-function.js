@@ -3,7 +3,7 @@ function toggle(...args) {
     return function () {
         if (args.length === 0) return
         // if(index===args.length) index=0
-        index = (index + 1) % args.length
+        index = index % args.length
         return args[index++]
     }
 }
